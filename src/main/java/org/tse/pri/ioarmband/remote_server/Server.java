@@ -2,7 +2,6 @@ package org.tse.pri.ioarmband.remote_server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
@@ -20,16 +19,23 @@ public class Server implements Runnable{
 	
 	
 	public void start(){
+		System.out.println("starting");
 		try {
 			serverSocket = new ServerSocket(port, 50, Inet4Address.getByName(bindAddr));
-			new Thread(this);
+			Thread th = new Thread(this);
+			th.start();
+			th.join();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 	public void run() {
 		try {
